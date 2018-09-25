@@ -6,7 +6,6 @@
 # Function to put items in the bag
 # Function to remove items from the bag
 
-
 class Bag:
 
     # The class constructor for the bag class containing the capacity, current_load, contains, and the name attributes
