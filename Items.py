@@ -1,8 +1,9 @@
-# Name (Upper case letter)
-# Weight
+# Class items contains two fields:
+#   - Name is the uppercase letter denoting the item
+#   - Weight is the mass of the item, an integer
 
 class Item:
+    # Constructor for Item class
     def __init__(self, name, weight):
         self.name = name
         self.weight = weight
-        
