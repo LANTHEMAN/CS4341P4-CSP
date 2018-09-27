@@ -1,9 +1,22 @@
-class InputReader:
+import Items
+import Bag
+import sys
+
+class Input(object):
     # read the whole file and create object
     def __init__(self,input_file_name):
         with open(input_file_name) as file:
             data = file.readlines()
         self.input_file = data
+        self.list_of_items = []
+        self.list_of_bags = []
+        self.low_limit = 0
+        self.upper_limit = sys.maxsize
+        self.unary_inclusive = {}
+        self.unary_exclusive = {}
+        self.binary_equal = []
+        self.binary_not_equal = []
+        self.mutual_inclusive = []
 
     def InterpretFile(self):
         separator_counter = 0
@@ -28,35 +41,79 @@ class InputReader:
                 elif separator_counter == 8:
                     self.AddMutualInclusive(i)
 
+        print(
+            self.list_of_items,
+            self.list_of_bags,
+            self.low_limit,
+            self.upper_limit,
+            self.unary_inclusive,
+            self.unary_exclusive,
+            self.binary_equal,
+            self.binary_not_equal,
+            self.mutual_inclusive)
+
     def AddItem(self,line):
         item, weight = line.split()
+        self.list_of_items.append(Items.Item(item,weight))
 
     def AddBag(self,line):
-        Bag, capacity = line.split()
+        bag, capacity = line.split()
+        self.list_of_bags.append(Bag.Bag(capacity,0,bag))
 
     def AddFittingLimit(self,line):
-        lower_limit, upper_limit = line.split()
+        self.low_limit, self.upper_limit = line.split()
 
     def AddUnaryInclusive(self,line):
         ui = line.split()
-        item = ui[0]
-        bags = ui[1:]
+        item_name = ui[0]
+        bags_name = ui[1:]
+        item = self.FindItem(self.list_of_items,item_name)
+        bags = []
+        for i in bags_name:
+            bags.append(self.FindBag(self.list_of_bags,i))
+        self.unary_inclusive[item] = bags
 
     def AddUnaryExclusive(self,line):
         ue = line.split()
-        item = ue[0]
-        bags = ue[1:]
+        item_name = ue[0]
+        bags_name = ue[1:]
+        item = self.FindItem(self.list_of_items,item_name)
+        bags = []
+        for i in bags_name:
+            bags.append(self.FindBag(self.list_of_bags,i))
+        self.unary_exclusive[item] = bags
 
     def AddBinaryEqual(self,line):
-        item1, item2 = line.split()
+        item_name1, item_name2 = line.split()
+        item1 = self.FindItem(self.list_of_items,item_name1)
+        item2 = self.FindItem(self.list_of_items, item_name2)
+        self.binary_equal.append((item1,item2))
 
     def AddBinaryNotEqual(self,line):
-        item1, item2 = line.split()
+        item_name1, item_name2 = line.split()
+        item1 = self.FindItem(self.list_of_items,item_name1)
+        item2 = self.FindItem(self.list_of_items, item_name2)
+        self.binary_not_equal.append((item1,item2))
 
     def AddMutualInclusive(self,line):
-        item1, item2, bag1, bag2 = line.split()
+        item_name1, item_name2, bag_name1, bag_name2 = line.split()
+        item1 = self.FindItem(self.list_of_items, item_name1)
+        item2 = self.FindItem(self.list_of_items, item_name2)
+        bag1 = self.FindBag(self.list_of_bags,bag_name1)
+        bag2 = self.FindBag(self.list_of_bags, bag_name2)
+        self.mutual_inclusive.append(((item1,item2),(bag1,bag2)))
+
+    def FindItem(self,list,name):
+        for i in list:
+            if i.name == name:
+                return i
+
+    def FindBag(self,list,name):
+        for i in list:
+            if i.name == name:
+                return i
 
 
-inpuuut = 'input1.txt'
-reader = InputReader(inpuuut)
+inpuuut = 'input25.txt'
+reader = Input(inpuuut)
 reader.InterpretFile()
