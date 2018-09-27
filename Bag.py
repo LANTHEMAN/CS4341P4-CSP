@@ -6,20 +6,29 @@
 # Function to put items in the bag
 # Function to remove items from the bag
 
+import Items
+
 
 class Bag():
 
     # The class constructor for the bag class containing the capacity, current_load, contains, and the name attributes
-    def __init__(self, capacity=0, current_load=0, contains=0, name=""):
-        self.capacity = capacity if capacity is None else 0
-        self.current_load = current_load if current_load is None else 0
-        self.contains = contains if contains is None else []
-        self.name = name if name is None else 0
+    def __init__(self):
+        self.capacity = self.capacity
+        self.current_load = self.current_load
+        self.contains = [Items.Item]
+        self.name = self.name
 
     # Checks if the current capacity isn't met
+    def sum_item_weights(self):
+        item_weights = 0
+        for i in self.contains:
+            item_weights = i.weight + item_weights
+        return item_weights
+
     def can_add_item(self):
         if self.current_load <= 1 and self.capacity != 0:
-            return True
+            if self.sum_item_weights(self) <= self.capacity:
+                return True
         else:
             return False
 
