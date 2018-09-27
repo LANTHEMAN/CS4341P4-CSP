@@ -9,23 +9,24 @@
 import Items
 
 
-class Bag():
+class Bag(object):
 
     # The class constructor for the bag class containing the capacity, current_load, contains, and the name attributes
-    def __init__(self):
-        self.capacity = self.capacity
-        self.current_load = self.current_load
+    def __init__(self, capacity, current_load, name):
+        self.capacity = capacity
+        self.current_load = current_load
         self.contains = [Items.Item]
-        self.name = self.name
+        self.name = name
 
     # Checks if the current capacity isn't met
-    def sum_item_weights(self):
+    def sum_item_weights(self, items):
         item_weights = 0
         for i in self.contains:
-            item_weights = i.weight + item_weights
+            print(i)
+            #item_weights = i.weight + item_weights
         return item_weights
 
-    def can_add_item(self):
+    def can_add_item(self, items):
         if self.current_load <= 1 and self.capacity != 0:
             if self.sum_item_weights(self) <= self.capacity:
                 return True
@@ -33,7 +34,7 @@ class Bag():
             return False
 
     # Calculates the current load of the
-    def calculate_current(self):
+    def calculate_current(self, items):
         return len(self.contains) / self.capacity
 
     # Adds an item to a bag

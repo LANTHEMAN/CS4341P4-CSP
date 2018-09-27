@@ -18,20 +18,11 @@ import Items
 # return failure
 import Items
 import Bag
-bag1 = Bag.Bag
-bag1.capacity = 3
-bag1.current_load = 0
-bag1.name = "B"
-bag1.contains = []
-item1 = Items.Item
-item1.name = "A"
-item1.weight = 2
-# item2 = Items.Item
-# item2.weight = 3
-# item2.name = "C"
-bag1.add_item(bag1, item1)
-#bag1.add_item(bag1,item2)
-print(item1.name)
+bag1 = Bag.Bag(3,0,"b")
+item1 = Items.Item("A", 2)
+item2 = Items.Item("C", 2)
+bag1.add_item(item1)
+bag1.add_item(item2)
 #bag_list = [Bag.Bag]
 
 #print(b[0])
