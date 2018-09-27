@@ -23,7 +23,6 @@ item1 = Items.Item("A", 2)
 item2 = Items.Item("C", 5)
 bag1.add_item(item1)
 bag1.add_item(item2)
-print(bag1.contains)
 #bag_list = [Bag.Bag]
 
 #print(b[0])

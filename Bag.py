@@ -19,15 +19,14 @@ class Bag(object):
         self.name = name
 
     # Checks if the current capacity isn't met
-    def sum_item_weights(self):
+    def sum_item_weights(self, item):
         item_weights = 0
-        for i in self.contains:
-            item_weights = i.weight + item_weights
+        item_weights = item_weights + item.weight
         return item_weights
 
-    def can_add_item(self):
+    def can_add_item(self, item):
         if self.current_load <= 1 and self.capacity != 0:
-            if self.sum_item_weights() <= self.capacity:
+            if self.sum_item_weights(item) <= self.capacity:
                 return True
         else:
             return False
@@ -38,7 +37,7 @@ class Bag(object):
 
     # Adds an item to a bag
     def add_item(self, item):
-        if self.can_add_item():
+        if self.can_add_item(item):
             self.contains.append(item)
             self.current_load = self.calculate_current()
         else:
