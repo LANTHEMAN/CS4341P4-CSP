@@ -8,3 +8,9 @@ class Item(object):
     def __init__(self, name, weight):
         self.name = name
         self.weight = weight
+        self.same_bag = False
+        self.is_assigned = False
+
+
+
+

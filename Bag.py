@@ -39,10 +39,10 @@ class Bag(object):
     def add_item(self, item):
         if self.can_add_item(item):
             self.contains.append(item)
+            item.current_bag = self.name
             self.current_load = self.calculate_current()
         else:
-            print("The threshold for this Bag has been met, you cannot add anymore items.")
-            # For now we'll print out that we cannot handle anymore items
+            return -1
 
 
 

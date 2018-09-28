@@ -41,16 +41,16 @@ class Input(object):
                 elif separator_counter == 8:
                     self.AddMutualInclusive(i)
 
-        print(
-            self.list_of_items,
-            self.list_of_bags,
-            self.low_limit,
-            self.upper_limit,
-            self.unary_inclusive,
-            self.unary_exclusive,
-            self.binary_equal,
-            self.binary_not_equal,
-            self.mutual_inclusive)
+        # print(
+        #     self.list_of_items,
+        #     self.list_of_bags,
+        #     self.low_limit,
+        #     self.upper_limit,
+        #     self.unary_inclusive,
+        #     self.unary_exclusive,
+        #     self.binary_equal,
+        #     self.binary_not_equal,
+        #     self.mutual_inclusive)
 
     def AddItem(self,line):
         item, weight = line.split()
