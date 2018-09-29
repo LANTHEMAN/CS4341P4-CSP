@@ -10,7 +10,3 @@ class Item(object):
         self.weight = weight
         self.same_bag = False
         self.is_assigned = False
-
-
-
-
