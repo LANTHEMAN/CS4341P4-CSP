@@ -61,7 +61,9 @@ class Input(object):
         self.list_of_bags.append(Bag.Bag(int(capacity),0,bag_name))
 
     def AddFittingLimit(self,line):
-        self.low_limit, self.upper_limit = line.split()
+        low_limit, upper_limit = line.split()
+        self.low_limit = int(low_limit)
+        self.upper_limit = int(upper_limit)
 
     def AddUnaryInclusive(self,line):
         ui = line.split()

@@ -21,8 +21,94 @@ import Bag
 import InputReader
 
 
-def valid_assignment(next_item,parameter):
+def check_upper_bag_limit(parameter, bag_index):
+    if len(parameter.list_of_bags[bag_index].contains) + 1 <= parameter.upper_limit:
+        return True
+    else:
+        return False
+
+
+def check_unary_inclusive(next_item, parameter, bag_index):
+    if next_item in parameter.unary_inclusive:
+        if parameter.list_of_bags[bag_index] in parameter.unary_inclusive[next_item]:
+            return True
+        else:
+            #print("The bag you tried to add is not in unary inclusive list")
+            return False
+    else:
+        return True
+
+
+def check_unary_exclusive(next_item, parameter, bag_index):
+    if next_item in parameter.unary_exclusive:
+        if parameter.list_of_bags[bag_index] not in parameter.unary_exclusive[next_item]:
+            return True
+        else:
+            #print("The bag you tried to add is in unary exclusive list")
+            return False
     return True
+
+
+def check_binary_equal(next_item,parameter,bag_index):
+    for i in parameter.binary_equal:
+        if next_item in i:
+            for j in i:
+                if not j == next_item:
+                    if j in parameter.list_of_items:
+                        return True
+                    elif j.bag == parameter.list_of_bags[bag_index]:
+                        return True
+                    else:
+                        return False
+
+    return True
+
+
+def check_binary_not_equal(next_item,parameter,bag_index):
+    for i in parameter.binary_not_equal:
+        if next_item in i:
+            for j in i:
+                if not j == next_item:
+                    if j in parameter.list_of_items:
+                        return True
+                    elif not j.bag == parameter.list_of_bags[bag_index]:
+                        return True
+                    else:
+                        return False
+    return True
+
+
+def check_mutual_inclusive(next_item,parameter,bag_index):
+    for i in parameter.mutual_inclusive:
+        # check if in item list
+        if next_item in i[0]:
+            # check if in bag list
+            if parameter.list_of_bags[bag_index] in i[1]:
+                for k in i[1]:
+                    if not k == parameter.list_of_bags[bag_index]:
+                        current_bag = k
+                for j in i[0]:
+                    if not j == next_item:
+                        if j in parameter.list_of_items:
+                            return True
+                        elif j.bag == k:
+                            return True
+                        else:
+                            return False
+    return True
+
+
+def valid_assignment(next_item,parameter,bag_index):
+    if(
+            check_upper_bag_limit(parameter, bag_index) and
+            check_unary_inclusive(next_item,parameter,bag_index) and
+            check_unary_exclusive(next_item, parameter, bag_index) and
+            check_binary_equal(next_item, parameter, bag_index) and
+            check_binary_not_equal(next_item, parameter, bag_index) and
+            check_mutual_inclusive(next_item, parameter, bag_index)):
+        return True
+    else:
+        return False
 
 
 def select_unassigned_variable(parameter):
@@ -32,9 +118,14 @@ def select_unassigned_variable(parameter):
 def back_tracking(parameter):
     if finished(parameter):
         return True
-    next_item = select_unassigned_variable(parameter)
+
+    if parameter.list_of_items:
+        next_item = select_unassigned_variable(parameter)
+    else:
+        return False
+
     for i in range(len(parameter.list_of_bags)):
-        if valid_assignment(next_item, parameter):
+        if valid_assignment(next_item, parameter,i):
             added = parameter.list_of_bags[i].add_item(next_item)
             if added:
                 outcome = back_tracking(parameter)
@@ -47,37 +138,25 @@ def back_tracking(parameter):
 
 
 def finished(parameter):
+    for a in parameter.list_of_bags:
+        if 0.9 > a.current_load_percentage:
+            return False
     if len(parameter.list_of_items) == 0:
         return True
     else:
         return False
 
 
-param = InputReader.Input('input25.txt')
+param = InputReader.Input('input23.txt')
 param.InterpretFile()
 result = back_tracking(param)
 print('result: ', result)
-
-
+for i in param.list_of_bags:
+    print('bag name: ',i.name)
+    for j in i.contains:
+        print('item name: ', j.name)
 #
-# # Put item in this bag
-# def unary_inclusion_constraint(dic):
-#     if isinstance(dic, dict):
-#         for i in dic.values():
-#             for j in i:
-#                 print(type(j))
-#                 if isinstance(j, Bag.Bag):
-#                     print(type(dic.keys()))
-#                     #j.add_item(dic.keys())
-#                     #print(j.contains[0])
-#                     break
-#         # if bag.can_add_item(item):
-#         #     bag.add_item(item)
-#         #     item.is_assigned = True
-#         return True
-#     else:
-#         print("You are tyring to add to an already full bag")
-#         return -1
+
 #
 #
 # # Item cannot be in this bag

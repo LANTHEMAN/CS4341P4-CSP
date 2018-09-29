@@ -8,7 +8,7 @@ class Item(object):
     def __init__(self, name, weight):
         self.name = name
         self.weight = weight
-        self.same_bag = False
+        self.bag = None
         self.is_assigned = False
 
 

@@ -15,6 +15,7 @@ class Bag(object):
     def __init__(self, capacity, current_load, name):
         self.capacity = capacity
         self.current_load = current_load
+        self.current_load_percentage = 0
         self.contains = []
         self.name = name
         self.bag_fit_limit_reached = False
@@ -22,9 +23,9 @@ class Bag(object):
     # Checks if the current capacity isn't met
     def sum_item_weights(self, item):
         if not self.contains:
-            weight = 0;
+            weight = 0
             return weight
-        elif self.contains is not None:
+        elif self.contains:
             for i in self.contains:
                 weight = item.weight + i.weight
                 return weight
@@ -45,6 +46,8 @@ class Bag(object):
         if self.can_add_item(item):
             self.contains.append(item)
             self.current_load += item.weight
+            self.current_load_percentage = self.current_load / self.capacity
+            item.bag = self
             return True
         else:
             return False
@@ -53,6 +56,8 @@ class Bag(object):
     def remove_item(self, item):
         self.contains.remove(item)
         self.current_load -= item.weight
+        self.current_load_percentage = self.current_load / self.capacity
+        item.bag = None
 
 
 
