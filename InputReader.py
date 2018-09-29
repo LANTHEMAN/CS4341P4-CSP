@@ -41,24 +41,24 @@ class Input(object):
                 elif separator_counter == 8:
                     self.AddMutualInclusive(i)
 
-        # print(
-        #     self.list_of_items,
-        #     self.list_of_bags,
-        #     self.low_limit,
-        #     self.upper_limit,
-        #     self.unary_inclusive,
-        #     self.unary_exclusive,
-        #     self.binary_equal,
-        #     self.binary_not_equal,
-        #     self.mutual_inclusive)
+        print(
+            self.list_of_items,
+            self.list_of_bags)
+            # self.low_limit,
+            # self.upper_limit,
+            # self.unary_inclusive,
+            # self.unary_exclusive,
+            # self.binary_equal,
+            # self.binary_not_equal,
+            # self.mutual_inclusive)
 
     def AddItem(self,line):
-        item, weight = line.split()
-        self.list_of_items.append(Items.Item(item,weight))
+        item_name, weight = line.split()
+        self.list_of_items.append(Items.Item(item_name,int(weight)))
 
     def AddBag(self,line):
-        bag, capacity = line.split()
-        self.list_of_bags.append(Bag.Bag(capacity,0,bag))
+        bag_name, capacity = line.split()
+        self.list_of_bags.append(Bag.Bag(int(capacity),0,bag_name))
 
     def AddFittingLimit(self,line):
         self.low_limit, self.upper_limit = line.split()
@@ -112,8 +112,3 @@ class Input(object):
         for i in list:
             if i.name == name:
                 return i
-
-
-inpuuut = 'input25.txt'
-reader = Input(inpuuut)
-reader.InterpretFile()
