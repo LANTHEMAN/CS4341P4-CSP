@@ -17,13 +17,17 @@ class Bag(object):
         self.current_load = current_load
         self.contains = []
         self.name = name
+        self.bag_fit_limit_reached = False
 
     # Checks if the current capacity isn't met
     def sum_item_weights(self, item):
-        weight = 0
-        for i in self.contains:
-            weight += i.weight
-        return weight
+        if not self.contains:
+            weight = 0;
+            return weight
+        elif self.contains is not None:
+            for i in self.contains:
+                weight = item.weight + i.weight
+                return weight
 
     def can_add_item(self, item):
         if self.current_load <= 1 and self.capacity != 0:
