@@ -79,22 +79,55 @@ def check_binary_not_equal(next_item,parameter,bag_index):
 
 
 def check_mutual_inclusive(next_item,parameter,bag_index):
-    for i in parameter.mutual_inclusive:
+    # for a in parameter.list_of_bags:
+    #     print('bag name: ', a.name)
+    #     for b in a.contains:
+    #         print('item name: ', b.name)
+    for mi in parameter.mutual_inclusive:
         # check if in item list
-        if next_item in i[0]:
+        if next_item in mi[0]:
+            # loop through the item tuple in a single constraint
+            for i in mi[0]:
+                # get the value already assigned (not the current item)
+                if i.bag and (i.bag in mi[1]):
+                    for b in mi[1]:
+                        if not b == i.bag:
+                            if not parameter.list_of_bags[bag_index] == b:
+                                # print('next_item: ',next_item.name,' bag[i]: ',parameter.list_of_bags[bag_index].name)
+                                # print('false',mi[0][0].name,mi[0][1].name,mi[1][0].name,mi[1][1].name,'\n')
+                                return False
+
+                if i == next_item and (parameter.list_of_bags[bag_index] in mi[1]):
+                    for d in mi[0]:
+                        if (not d == next_item) and d.bag:
+                            current_item = d
+                            for c in mi[1]:
+                                if not c == parameter.list_of_bags[bag_index]:
+                                    if not current_item.bag == c:
+                                        return False
+
             # check if in bag list
-            if parameter.list_of_bags[bag_index] in i[1]:
-                for k in i[1]:
-                    if not k == parameter.list_of_bags[bag_index]:
-                        current_bag = k
-                for j in i[0]:
-                    if not j == next_item:
-                        if j in parameter.list_of_items:
-                            return True
-                        elif j.bag == k:
-                            return True
-                        else:
-                            return False
+    #         print(1)
+    #         if parameter.list_of_bags[bag_index] in i[1]:
+    #             print(2)
+    #             for k in i[1]:
+    #                 if not k == parameter.list_of_bags[bag_index]:
+    #                     the_other_bag = k
+    #             for j in i[0]:
+    #                 print('lmao')
+    #                 if (j not in parameter.list_of_items) and (not j == next_item):
+    #                     print('hahha')
+    #                     print('j.bag: ',j.bag.name,'the_other: ',the_other_bag.name)
+    #                     if not j.bag == the_other_bag:
+    #                         print('next_item: ',next_item.name,' bag[i]: ',parameter.list_of_bags[bag_index].name)
+    #                         print('false ',i[0][0].name,i[0][1].name,i[1][0].name,i[1][1].name,'\n')
+    #                         return False
+    #
+    #     print('next_item: ', next_item.name, ' bag[i]: ', parameter.list_of_bags[bag_index].name)
+    #     print('true ', i[0][0].name, i[0][1].name, i[1][0].name, i[1][1].name)
+    # print('checked all MI ','\n')
+    # print('next_item: ', next_item.name, ' bag[i]: ', parameter.list_of_bags[bag_index].name)
+    # print('check all true','\n')
     return True
 
 
@@ -147,61 +180,13 @@ def finished(parameter):
         return False
 
 
-param = InputReader.Input('input23.txt')
+param = InputReader.Input('input26.txt')
 param.InterpretFile()
+
+
 result = back_tracking(param)
-print('result: ', result)
-for i in param.list_of_bags:
-    print('bag name: ',i.name)
-    for j in i.contains:
-        print('item name: ', j.name)
-#
-
-#
-#
-# # Item cannot be in this bag
-# def unary_exclusion_constraint(item, bag):
-#     if isinstance(item, Items.Item) and isinstance(bag, list(Bag.Bag)):
-#         return True
-#     else:
-#         return False
-#
-#
-# # Both items need to be in the same bag
-# def binary_equals_constraint(item_one, item_two):
-#     if isinstance(item_one, Items.Item) and isinstance(item_two, Items.Item):
-#             return True
-#     pass
-#
-#
-# # These items cannot go in the same Bag
-# def binary_does_not_equal_constraint(item_1, item_2, bags_in_question):
-#     # if isinstance(item_1, Items.Item) and isinstance(item_2, Items.Item) and isinstance(bags_in_question, Bag.Bag):
-#     #     if()
-#      pass
-#
-#
-# def binary_mutual_in(item_1, item_2, bag_1, bag_2):
-#     if isinstance(item_1, Items.Item) and isinstance(item_2, Items.Item) and isinstance(bag_1, Bag.Bag) and isinstance(bag_2, Bag.Bag):
-#         if item_1 in bag_1.contains:
-#             bag_2.add_item(item_2)
-#         elif item_1 in bag_2.contains:
-#             bag_1.add_item(item_2)
-#         elif item_2 in bag_1.contains:
-#             bag_2.add_item(item_1)
-#         elif item_2 in bag_1.contains:
-#             bag_2.add_item(item_1)
-#         else:
-#             bag_1.add_item(item_1)
-#             bag_2.add_item(item_2)
-#     pass
-#
-#
-#
-#
-# # unary_inclusion_constraint(item1,bag1)
-#
-# # print(bag1.contains[0], item1)
-# unary_inclusion_constraint(r.unary_inclusive)
-
-
+print('result: ', result)   `
+for a in param.list_of_bags:
+    print('bag name: ',a.name)
+    for b in a.contains:
+        print('item name: ', b.name)
