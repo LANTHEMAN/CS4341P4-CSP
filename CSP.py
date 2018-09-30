@@ -171,11 +171,17 @@ def back_tracking(parameter):
 
 
 def finished(parameter):
-    for a in parameter.list_of_bags:
-        if 0.9 > a.current_load_percentage:
-            return False
     if len(parameter.list_of_items) == 0:
+        for a in parameter.list_of_bags:
+            if .90 > a.current_load_percentage:
+                print("This bag hasn't reached the threshold yet", a.name, a.current_load_percentage)
+                b = parameter.list_of_bags.index(a)
+                for d in a.contains:
+                    print("Therefore these items cannot be resolved", d.name)
+                del parameter.list_of_bags[b]
+                del parameter.list_of_bags[b]
         return True
+
     else:
         return False
 
@@ -185,8 +191,9 @@ param.InterpretFile()
 
 
 result = back_tracking(param)
-print('result: ', result)   `
+print('result: ', result)
 for a in param.list_of_bags:
-    print('bag name: ',a.name)
+    print('bag name: ', a.name, a.current_load_percentage)
     for b in a.contains:
+        pass
         print('item name: ', b.name)
