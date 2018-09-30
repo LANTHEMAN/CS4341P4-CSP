@@ -183,10 +183,11 @@ def finished(parameter):
         return True
 
     else:
+        print("Here")
         return False
 
 
-param = InputReader.Input('input26.txt')
+param = InputReader.Input('input25.txt')
 param.InterpretFile()
 
 
