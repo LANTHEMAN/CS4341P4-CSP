@@ -18,6 +18,8 @@ class Input(object):
         self.binary_not_equal = []
         self.mutual_inclusive = []
 
+    # calls this function the populate all the items, bags and constraints
+    # all functions below are helper function of this function
     def InterpretFile(self):
         separator_counter = 0
         for i in self.input_file:
@@ -105,11 +107,13 @@ class Input(object):
         bag2 = self.FindBag(self.list_of_bags, bag_name2)
         self.mutual_inclusive.append(((item1,item2),(bag1,bag2)))
 
+    # find item by name
     def FindItem(self,list,name):
         for i in list:
             if i.name == name:
                 return i
 
+    # find bag by name
     def FindBag(self,list,name):
         for i in list:
             if i.name == name:

@@ -9,4 +9,4 @@ class Item(object):
         self.name = name
         self.weight = weight
         self.bag = None
-        self.is_assigned = False
+        self.num_of_constraints=None

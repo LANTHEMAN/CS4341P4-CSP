@@ -1,0 +1,10 @@
+a A 
+number of items: 1
+total weight: 2 total capacity: 3
+wasted capacity: 1
+
+b B D C 
+number of items: 3
+total weight: 3 total capacity: 3
+wasted capacity: 0
+
